@@ -1,10 +1,4 @@
 benh & paranoidtruth's phils install guide
-
----------------------------------------------------------------------------------------------------------------------------
-- This setup is for a win/linux combo (COLD) wallet setup.  
-- If you have zero experience with linux, you can still make it through, but you should strongly consider the free
-- vps hosting setup service that phils provides so you don't have to!!!
-- take a look in the hosting-free-node-install channel
 ---------------------------------------------------------------------------------------------------------------------------
 
 ************************************ WINDOWS (or mac) go to your local(windows) wallet ***********************************
@@ -68,7 +62,7 @@ you want to see ENABLED
 
 
 ************************ LINUX VPS SETUP SECTION *****************************************
-Follow the LINUX directions from: http://www.philscurrency.com/documentation/
+Follow the LINUX directions from: http://philscurrency.org/Linux_VPS_guide.pdf
 But STOP immediately after you login with PUTTY (or terminal if using a mac).  
 DO NOT DO ANY OTHER STEPS FROM THAT GUIDE
 From that point on, follow this guide
