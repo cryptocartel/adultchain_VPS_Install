@@ -1,4 +1,10 @@
 benh & paranoidtruth's phils install guide
+
+---------------------------------------------------------------------------------------------------------------------------
+- This setup is for a win/linux combo (COLD) wallet setup.  
+- If you have zero experience with linux, you can still make it through, but you should strongly consider the free
+- vps hosting setup service that phils provides so you don't have to!!!
+- take a look in the hosting-free-node-install channel
 ---------------------------------------------------------------------------------------------------------------------------
 
 ************************************ WINDOWS (or mac) go to your local(windows) wallet ***********************************
@@ -38,16 +44,17 @@ rpcuser=phils
 rpcpassword=any_random_string_here_you_do_not_need_to_remember_it
 rpcallowip=127.0.0.1
 rpcport=36002
-addnode=52.14.182.71:36003
-addnode=13.59.107.218:36003
-addnode=52.14.113.155:36003
+addnode=45.32.195.178:36003
+addnode=45.76.60.163:36003
+addnode=108.45.164.191:36003
+addnode=45.76.252.239:36003
 
 Save it.
 
 Open the masternode.conf file (use notepad).
 Make it look exactly like this, but swap out your vps IP, genkey, and txid from above
 Also, your index which was probably 0
-MN1 YOURIP:36003 your_genkey_goes_here your_tx_id_goes_here 0
+MN1 VPSIP:36003 your_genkey_goes_here your_tx_id_goes_here 0
 
 that's it, that file only needs 1 line (unless you have 2 MN, then it will have 2 lines, etc).
 Save it.
@@ -78,6 +85,8 @@ wget https://raw.githubusercontent.com/paranoidtruth/phils_install/master/add_us
 sh add_user.sh
 
 #now, you should be logged in as that new user, and we download and run the install script:
+cd ~/
+
 wget https://raw.githubusercontent.com/paranoidtruth/phils_install/master/phils_install.sh
 sudo chmod +x phils_install.sh
 sh phils_install.sh
@@ -119,9 +128,11 @@ still not good?  Wait 5 min and repeat all debug steps.
 philscurrency-cli masternode list | grep xxxx
 #with any luck you will see something like: xxxx : ENABLED
 
-#at that point you should be good, 
-#double check in masternodes.online, search by IP or MN Address (pub key)
-#might take a couple minutes to show up there
+#at that point you should be good, but it's always a good idea to double check on an external site:
+#full disclosure, the site I'm recommending is mine (mnode.club)  
+#can check your node status: https://mnode.club/g/nodes/PHILS/
+#add to your "watchlist" to get an email alert if the node goes down and when you receive rewards
+#will take 5 minutes for a new node to load into the system
 
 #FYI: HELPFUL commands in the VPS:
 philscurrencyd #starts wallet/masternode 
