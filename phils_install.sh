@@ -21,11 +21,14 @@ echo -n "Installing with GENKEY: $GENKEY, RPC PASS: $PASSWORD, VPS IP: $WANIP"
 
 #begin optional swap section
 echo "Setting up disk swap..." 
-free -h sudo fallocate -l 4G /swapfile ls -lh /swapfile 
+free -h 
+sudo fallocate -l 4G /swapfile 
+ls -lh /swapfile 
 sudo chmod 600 /swapfile 
 sudo mkswap /swapfile 
 sudo swapon /swapfile 
-echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab sudo bash -c "echo 'vm.swappiness = 10' >> /etc/sysctl.conf" 
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab sudo bash -c "
+echo 'vm.swappiness = 10' >> /etc/sysctl.conf" 
 free -h 
 echo "SWAP setup complete..."
 #end optional swap section
@@ -60,9 +63,11 @@ maxconnections=64
 masternode=1 
 externalip=$WANIP:36003 
 masternodeprivkey=$GENKEY
-addnode=52.14.182.71:36003 
-addnode=13.59.107.218:36003 
-addnode=52.14.113.155:36003
+addnode=45.32.195.178:36003
+addnode=45.76.60.163:36003
+addnode=108.45.164.191:36003
+addnode=45.76.252.239:36003
+addnode=54.36.178.75
 EOF
 
 echo "config completed, restarting wallet..." 
