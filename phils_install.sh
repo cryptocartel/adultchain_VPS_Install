@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "==================================================================" 
-echo "Welcome to the installation of your PhilsCurrency Masternode" 
+echo "Welcome to the installation of your Digiwage Masternode" 
 echo " ************ STEP 2: WALLET INSTALL *****************" 
 echo "==================================================================" 
 echo "Installing, this will take appx 2 min to run..."
@@ -33,41 +33,36 @@ free -h
 echo "SWAP setup complete..."
 #end optional swap section
 
-wget https://github.com/philscurrency/philscurrency/releases/download/v1.2/philscurrency-1.0.0-linux64.tar.gz 
-tar -zxvf philscurrency-1.0.0-linux64.tar.gz 
+wget https://github.com/digiwage/digiwage/releases/download/v1.0.0/digiwage-1.0.0-x86_64-linux-gnu.tar.gz 
+tar -zxvf digiwage-1.0.0-x86_64-linux-gnu.tar.gz 
 rm -f philscurrency-1.0.0-linux64.tar.gz 
-mv philscurrency-1.0.0 phils 
-chmod +x ~/phils/bin/philscurrencyd 
-chmod +x ~/phils/bin/philscurrency-cli 
-sudo cp ~/phils/bin/philscurrencyd /usr/local/bin 
-sudo cp ~/phils/bin/philscurrency-cli /usr/local/bin 
+mv digiwage-1.0.0 digiwage 
+chmod +x ~/digiwage/bin/digiwaged 
+chmod +x ~/digiwage/bin/digiwage-cli 
+sudo cp ~/digiwage/bin/digiwaged /usr/local/bin 
+sudo cp ~/digiwage/bin/digiwage-cli /usr/local/bin 
 
 echo "INITIAL START: IGNORE ANY CONFIG ERROR MSGs..." 
-philscurrencyd 
+digiwaged 
 
 echo "Loading wallet, wait..." 
 sleep 10 
-philscurrency-cli stop 
+digiwage-cli stop 
 
 echo "creating config..." 
 
-cat <<EOF > ~/.philscurrency/philscurrency.conf 
-rpcuser=philsadminrpc 
+cat <<EOF > ~/.digiwage/digiwage.conf 
+rpcuser=digiwageadminrpc 
 rpcpassword=$PASSWORD 
 rpcallowip=127.0.0.1 
-rpcport=36002 
+rpcport=46002 
 listen=1 
 server=1 
 daemon=1 
 maxconnections=64
 masternode=1 
-externalip=$WANIP:36003 
+externalip=$WANIP:46003 
 masternodeprivkey=$GENKEY
-addnode=45.32.195.178:36003
-addnode=45.76.60.163:36003
-addnode=108.45.164.191:36003
-addnode=45.76.252.239:36003
-addnode=54.36.178.75
 EOF
 
 echo "config completed, restarting wallet..." 
@@ -93,6 +88,6 @@ sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
 echo "basic security completed..."
 
-echo "philscurrency-cli getmininginfo"
-philscurrency-cli getmininginfo
+echo "digiwage-cli getmininginfo"
+digiwage-cli getmininginfo
 echo "Finished!  once the blockchain sync has finished you can do the final checks in the guide"
