@@ -145,5 +145,7 @@ masternode start-alias MN1
 masternode list
 masternode list-conf
 
-#wait for rewards, at least 24 hours.
+#wait for rewards, possibly 24+ hours.
 #Also, now that your MN is running, good time to backup your windows wallet.dat file to a usb drive, etc!
+#you may monitor your node with email alerts for status and rewards at:
+https://mnode.club/g/nodes/WAGE

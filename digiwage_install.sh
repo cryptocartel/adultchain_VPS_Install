@@ -90,4 +90,7 @@ echo "basic security completed..."
 
 echo "digiwage-cli getmininginfo"
 digiwage-cli getmininginfo
+
 echo "Finished!  once the blockchain sync has finished you can do the final checks in the guide"
+echo "AND you may monitor your node with email alerts for status and rewards at:"
+echo "https://mnode.club/g/nodes/WAGE"
