@@ -1,0 +1,149 @@
+Digiwage install guide
+
+---------------------------------------------------------------------------------------------------------------------------
+- This setup is for a win/linux combo (COLD) wallet setup.  
+- If you have zero experience with linux, you can still make it through with some patience 
+---------------------------------------------------------------------------------------------------------------------------
+
+************************************ WINDOWS (or mac) go to your local(windows) wallet ***********************************
+You should send all of your coins to your windows wallet from the exchange.  
+send to your primary/default address (you can find it in file->receiving addresses.  
+You need slightly over 12000 coins to cover the fees.
+
+Wait until your coins arrive & are confirmed (can verify confirmed in the transactions tab)
+Go to File->receiving addresses.
+Create a new address, label it MN1.
+Send exactly 12000 coins to that address.  You are just sending coins to yourself at a secondary wallet address. 
+ONE TRANSACTION.  EXACTLY 12000.  Do NOT add in extra to cover the fees!
+Wait for a few confirms in the transactions tab, the full amount won’t show, but the fee will.
+
+Open the console: Tools->debug console.
+Type: masternode outputs
+You should get output that looks something like this:
+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" : "0"
+Copy & save this to a file, you will need in a minute.
+The first part is your txid.  The second part is your tx index.  
+
+If that didn’t work, stop, you’re already broken.  
+Did you send exactly 12000 coins? 12000.1 is not 12000, 
+most common mistake is people send extra coins to their MN address.  
+Your primary can have the extra, your MN needs exactly 12000.   
+
+In the debug console, type:
+masternode genkey
+copy/save that output to a file.  Don’t lose it, you will need it for the VPS setup
+You will use the genkey & txid in just a minute for window conf...
+
+Now edit two windows conf files, just use notepad.  
+Find conf files in: c:\users\<username>\AppData\Roaming\Digiwage
+(mac users: /Users/<username>/Library/Application Support/Digiwage/)
+
+Open the digiwage.conf:
+Make it look exactly like this (replace with your own pass)
+rpcuser=digiwage
+rpcpassword=any_random_string_here_you_do_not_need_to_remember_it
+rpcallowip=127.0.0.1
+rpcport=46002
+
+Save it.
+
+Open the masternode.conf file (use notepad).
+Make it look exactly like this, but swap out your vps IP, genkey, and txid from above
+Also, your index which was probably 0
+MN1 VPSIP:46003 your_genkey_goes_here your_tx_id_goes_here index_id_num_here
+
+that's it, that file only needs 1 line (unless you have 2 MN, then it will have 2 lines, etc).
+Save it.
+
+Close the wallet and re-open to load the new configs.
+Go back to the console:
+masternode start-alias MN1
+It should start!
+do this to check it's windows status:
+masternode list-conf
+you want to see ENABLED
+
+
+***************************** LINUX VPS setup (part 1) *************************************************************
+#I personally use a fairly small linux instance, 1024memory, ubuntu, 16.04
+#a lot of people use vultr, the $5 instance.  but any vps will do.  stick with ubuntu 16.04 for this guide, though.
+#there are tons of vps services like: ovh, vpsdime, vultr, digitalocean, etc, etc.
+#get the vps ip they gave you, you will need that for the windows setup
+#you will use putty (on windows) or the terminal on mac.  If you do not know anything about putty, 
+#watch a quick youtube video.
+***************************************************************************************** 
+
+#after connecting should see something like: root@whatever_your_server_name_is
+#copy all instructions one line at a time:
+
+#first we will create a new user, we do not want to install as root
+#so let's create a user called digiwage1
+#it's going to ask you questions like room number, you can just hit enter for all those, all you really need to fill in 
+#is the new user password, do not lose this password either, you need both the root & saga1 password from now on
+
+adduser digiwage1
+
+#now give this user sudo access (more power!)
+usermod -aG sudo digiwage1
+
+#switch to that user:
+su - digiwage1
+cd ~/
+
+#now, you should be logged in as that new user, and we download and run the install script:
+wget https://raw.githubusercontent.com/digiwage/digiwage_install/master/digiwage_install.sh
+sudo chmod +x digiwage_install.sh
+sh digiwage_install.sh
+#you WILL NEED your genkey you created in the windows steps, copy it, right click to paste when asked for it
+#enter y at the end to enable firewall
+
+#your wallet should now be running, verify:
+digiwage-cli getinfo
+
+#look at the block count.  we need to let it sync up to the current block 
+#take a break, let the wallet sync.  Then check the block count again:
+digiwage-cli getinfo
+#once the block count is up to date, continue....
+
+#verify masternode is running, you want a status of "successfully started"
+digiwage-cli masternode status
+
+#what if it doesn't show active???
+#DEBUG RULES:
+if it doesn't show active and instead get something like "waiting for activation..."
+wait a couple minutes, try status again
+if not, go back to windows and shut-down, restart wallet.
+Do all of the following in the windows wallet debug/console:
+masternode start-alias MN1 (use whatever you named your MN)
+verify it's enabled in: masternode list-conf
+see that it's showing enabled in: masternode list  
+If everything is good there, try again in LINUX VPS:
+digiwage-cli masternode status
+if it's still not good, stop and restart it in the VPS:
+digiwage-cli stop
+digiwaged
+still not good?  Wait 5 min and repeat all debug steps.  
+
+
+#SUCCESS:
+#at that point you should be good, but it's always a good idea to double check on an external site:
+#full disclosure, the site I'm recommending is mine (mnode.club)  
+#add to your "watchlist" to get an email alert if the node goes down and when you receive rewards
+#will take 5 minutes for a new node to load into the system
+
+#FYI: HELPFUL commands in the VPS:
+digiwaged #starts wallet/masternode 
+digiwage-cli stop #stops 
+digiwage-cli masternode status #you want a status of successfully started
+digiwage-cli masternode debug
+digiwage-cli masternode list #shows all nodes
+digiwage-cli getmininginfo #show blocks, etc.
+digiwage-cli help #shows every possible command
+
+#HELPFUL IN WINDOWS CONSOLE
+masternode start-alias MN1
+masternode list
+masternode list-conf
+
+#wait for rewards, at least 24 hours.
+#Also, now that your MN is running, good time to backup your windows wallet.dat file to a usb drive, etc!
