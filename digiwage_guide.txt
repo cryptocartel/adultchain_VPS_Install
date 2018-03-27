@@ -57,7 +57,7 @@ Save it.
 
 Close the wallet and re-open to load the new configs.
 Go back to the console:
-masternode start-alias MN1
+startmasternode alias false MN1
 It should start!
 do this to check it's windows status:
 masternode list-conf
@@ -114,7 +114,7 @@ if it doesn't show active and instead get something like "waiting for activation
 wait a couple minutes, try status again
 if not, go back to windows and shut-down, restart wallet.
 Do all of the following in the windows wallet debug/console:
-masternode start-alias MN1 (use whatever you named your MN)
+startmasternode alias false MN1 (use whatever you named your MN)
 verify it's enabled in: masternode list-conf
 see that it's showing enabled in: masternode list  
 If everything is good there, try again in LINUX VPS:
@@ -137,11 +137,11 @@ digiwage-cli stop #stops
 digiwage-cli masternode status #you want a status of successfully started
 digiwage-cli masternode debug
 digiwage-cli masternode list #shows all nodes
-digiwage-cli getmininginfo #show blocks, etc.
+digiwage-cli getinfo #show blocks, etc.
 digiwage-cli help #shows every possible command
 
 #HELPFUL IN WINDOWS CONSOLE
-masternode start-alias MN1
+starmasternode alias false MN1
 masternode list
 masternode list-conf
 
