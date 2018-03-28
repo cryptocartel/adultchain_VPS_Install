@@ -141,7 +141,7 @@ digiwage-cli getinfo #show blocks, etc.
 digiwage-cli help #shows every possible command
 
 #HELPFUL IN WINDOWS CONSOLE
-starmasternode alias false MN1
+startmasternode alias false MN1
 masternode list
 masternode list-conf
 
