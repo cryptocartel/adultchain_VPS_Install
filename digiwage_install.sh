@@ -33,10 +33,10 @@ free -h
 echo "SWAP setup complete..."
 #end optional swap section
 
-wget https://github.com/digiwage/digiwage/releases/download/v1.0.0/digiwage-1.0.0-x86_64-linux-gnu.tar.gz 
-tar -zxvf digiwage-1.0.0-x86_64-linux-gnu.tar.gz 
-rm -f digiwage-1.0.0-x86_64-linux-gnu.tar.gz
-mv digiwage-1.0.0 digiwage 
+wget https://github.com/digiwage/digiwage/releases/download/v1.1.0/digiwage-1.1.0-x86_64-linux-gnu.tar.gz 
+tar -zxvf digiwage-1.1.0-x86_64-linux-gnu.tar.gz 
+rm -f digiwage-1.1.0-x86_64-linux-gnu.tar.gz
+mv digiwage-1.1.0 digiwage 
 chmod +x ~/digiwage/bin/digiwaged 
 chmod +x ~/digiwage/bin/digiwage-cli 
 sudo cp ~/digiwage/bin/digiwaged /usr/local/bin/ 
