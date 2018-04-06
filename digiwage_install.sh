@@ -1,12 +1,12 @@
 #!/bin/bash
 
 echo "==================================================================" 
-echo "Welcome to the installation of your Digiwage Masternode" 
+echo "Welcome to the installation of your Adultchain Masternode" 
 echo " ************ STEP 2: VPS WALLET INSTALL *****************" 
 echo "==================================================================" 
 echo "Installing, this will take appx 2 min to run..."
 
-read -p 'Enter your masternode genkey you created in windows, then [ENTER]: ' GENKEY
+read -p 'Enter your masternode genkey you created in your local wallet, then [ENTER]: ' GENKEY
 
 echo -n "Installing pwgen..."
 sudo apt-get install pwgen 
@@ -43,30 +43,26 @@ sudo cp ~/digiwage/bin/digiwaged /usr/local/bin/
 sudo cp ~/digiwage/bin/digiwage-cli /usr/local/bin/ 
 
 echo "INITIAL START: IGNORE ANY CONFIG ERROR MSGs..." 
-digiwaged 
+adultchaind 
 
 echo "Loading wallet, wait..." 
 sleep 30 
-digiwage-cli stop 
+adultchain-cli stop 
 
 echo "creating config..." 
 
-cat <<EOF > ~/.digiwage/digiwage.conf 
-rpcuser=digiwageadminrpc 
+cat <<EOF > ~/.adultchain/adultchain.conf 
+rpcuser=adultchainadminrpc 
 rpcpassword=$PASSWORD 
 rpcallowip=127.0.0.1 
-rpcport=46002 
-listen=1 
-server=1 
-daemon=1 
-maxconnections=64
+rpcport=6969 
+bind=$WANIP:6969
 masternode=1 
-externalip=$WANIP:46003 
 masternodeprivkey=$GENKEY
 EOF
 
 echo "config completed, restarting wallet..." 
-digiwaged 
+adultchaind 
 
 echo "setting basic security..." 
 sudo apt-get install fail2ban -y 
@@ -78,7 +74,7 @@ sudo ufw default allow outgoing
 sudo ufw default deny incoming 
 sudo ufw allow ssh/tcp 
 sudo ufw limit ssh/tcp 
-sudo ufw allow 46003/tcp 
+sudo ufw allow 6969/tcp 
 sudo ufw logging on 
 sudo ufw status
 sudo ufw enable
@@ -88,9 +84,7 @@ sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
 echo "basic security completed..."
 
-echo "digiwage-cli getmininginfo"
-digiwage-cli getmininginfo
+echo "adultchain-cli getinfo"
+adultchain-cli getinfo
 
-echo "Finished!  once the blockchain sync has finished you can do the final checks in the guide"
-echo "AND you may monitor your node with email alerts for status and rewards at:"
-echo "https://mnode.club/g/nodes/WAGE"
+echo "Finished!  once the blockchain sync has finished you can do the final steps in the guide"
